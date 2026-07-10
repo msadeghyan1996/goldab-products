@@ -38,7 +38,7 @@
     <meta name="twitter:image" content="{{ $seoImage }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{{ asset('css/storefront.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/storefront.css') }}?v={{ filemtime(public_path('css/storefront.css')) }}" rel="stylesheet">
     <script type="application/ld+json">
         {!! json_encode([
             '@context' => 'https://schema.org',
@@ -102,7 +102,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('storefront.catalog') }}#about">درباره ما</a>
+                    <a class="nav-link {{ request()->routeIs('storefront.about') ? 'active' : '' }}" href="{{ route('storefront.about') }}">درباره ما</a>
                 </li>
             </ul>
         </div>

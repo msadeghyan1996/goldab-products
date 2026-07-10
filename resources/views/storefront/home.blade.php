@@ -7,6 +7,12 @@
 
 @section('content')
 <section class="brand-hero-slider random-product-hero">
+    <div class="hero-gold-atmosphere" aria-hidden="true">
+        <span class="gold-dust-layer dust-near"></span>
+        <span class="gold-dust-layer dust-far"></span>
+        <span class="gold-light-wave"></span>
+    </div>
+
     @if($heroProducts->isNotEmpty())
         <div id="heroProductCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5200">
             <div class="carousel-inner">

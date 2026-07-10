@@ -11,6 +11,7 @@ use App\Http\Controllers\Storefront\ProductController as StorefrontProductContro
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CatalogController::class, 'index'])->name('storefront.catalog');
+Route::view('/about', 'storefront.about')->name('storefront.about');
 Route::redirect('/shop', '/', 301)->name('storefront.shop.redirect');
 Route::get('/catalog/products', [CatalogController::class, 'load'])->name('storefront.catalog.load');
 Route::get('/market/live-prices', LivePriceController::class)

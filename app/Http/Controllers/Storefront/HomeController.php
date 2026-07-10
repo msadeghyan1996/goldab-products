@@ -16,7 +16,7 @@ class HomeController extends Controller
             ->inRandomOrder()
             ->limit(5)
             ->get();
-        $newProducts = $catalog->query('new')->limit(8)->get();
+        $newProducts = $catalog->query('new')->limit(20)->get();
         $categories = Category::query()
             ->where('is_active', true)
             ->whereHas('products')
