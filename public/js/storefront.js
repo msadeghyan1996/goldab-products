@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 status.dataset.nextUrl = data.next_page_url || '';
                 refreshLivePrices();
                 if (!data.next_page_url) {
-                    status.innerHTML = '<span>همه محصولات نمایش داده شدند.</span>';
+                    status.innerHTML = '';
                     observer.disconnect();
                 }
             } catch (error) {

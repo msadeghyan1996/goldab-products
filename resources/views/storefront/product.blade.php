@@ -2,6 +2,42 @@
 
 @section('title', $product->title)
 @section('description', $product->short_description ?: $product->title)
+@section('image', $product->main_image ? url('/storage/'.ltrim($product->main_image, '/')) : asset('logo.jpg'))
+@section('type', 'product')
+@section('keywords', $product->title.', '.$product->category->name.', ایران گلد, طلا, جواهر')
+
+@php
+    $productSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Product',
+        'name' => $product->title,
+        'description' => $product->short_description ?: $product->title,
+        'image' => $product->main_image ? url('/storage/'.ltrim($product->main_image, '/')) : asset('logo.jpg'),
+        'sku' => $product->code,
+        'category' => $product->category->name,
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => config('app.name', 'ایران گلد'),
+        ],
+        'url' => route('storefront.products.show', $product),
+    ];
+
+    if ($productPrice !== null) {
+        $productSchema['offers'] = [
+            '@type' => 'Offer',
+            'priceCurrency' => 'IRR',
+            'price' => (string) ($productPrice * 10),
+            'availability' => $product->availability === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+            'url' => route('storefront.products.show', $product),
+        ];
+    }
+@endphp
+
+@push('structured_data')
+    <script type="application/ld+json">
+        {!! json_encode($productSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+@endpush
 
 @section('content')
 <div class="container product-detail py-4 py-lg-5">
@@ -31,16 +67,11 @@
 
         <div class="col-lg-6 order-1 order-lg-2">
             <div class="detail-info">
-                <span class="detail-category">{{ $product->category->name }}</span>
-                <h1>{{ $product->title }}</h1>
-                <div class="detail-code">کد محصول: <b>{{ \App\Support\PersianNumber::convert($product->code) }}</b></div>
+                <h1>{{ $product->title }} <span class="detail-category">{{ $product->category->name }}</span> </h1>
 
                 <div class="product-price-row live-product-price detail-top-price">
                     <div class="live-price-heading">
                         <span>قیمت لحظه‌ای محصول</span>
-                        @if($goldRate)
-                            <small><i class="live-mini-dot {{ $goldRate['is_live'] ? '' : 'is-stale' }}"></i>{{ $goldRate['is_live'] ? 'همگام با نرخ بازار' : 'بر اساس آخرین نرخ ثبت‌شده' }}</small>
-                        @endif
                         <button class="price-help-link" type="button" data-bs-toggle="modal" data-bs-target="#pricingGuideModal">
                             <i class="bi bi-exclamation-circle"></i>
                             نحوه محاسبه قیمت
@@ -52,6 +83,11 @@
                 <div class="spec-list">
                     <div><span>وزن</span><strong>{{ $product->weight !== null ? \App\Support\PersianNumber::convert(rtrim(rtrim(number_format((float) $product->weight, 3, '.', ''), '0'), '.')).' گرم' : '—' }}</strong></div>
                     <div><span>اجرت درصدی</span><strong>{{ $product->wage_percentage !== null ? \App\Support\PersianNumber::convert(rtrim(rtrim($product->wage_percentage, '0'), '.')).'٪' : '—' }}</strong></div>
+                </div>
+
+                <div class="order-guide">
+                    <h2>نحوه سفارش این محصول</h2>
+                    <p>برای سفارش این محصول می‌توانید از تلگرام به آی‌دی <a href="https://t.me/irgold24" target="_blank" rel="noopener">irgold۲۴</a> پیام ارسال کنید.</p>
                 </div>
 
                 @if($product->short_description)
@@ -79,22 +115,7 @@
 
                     <div class="pricing-formula">
                         <span>فرمول محاسبه</span>
-                        <strong>وزن × نرخ هر گرم × (۱ + اجرت ÷ ۱۰۰)</strong>
-                    </div>
-
-                    <div class="pricing-steps" aria-label="مراحل محاسبه قیمت">
-                        <div>
-                            <span>۱</span>
-                            <p>نرخ مثقال بازار به نرخ هر گرم طلا تبدیل می‌شود.</p>
-                        </div>
-                        <div>
-                            <span>۲</span>
-                            <p>نرخ هر گرم در وزن دقیق محصول ضرب می‌شود.</p>
-                        </div>
-                        <div>
-                            <span>۳</span>
-                            <p>اجرت درصدی محصول به مبلغ پایه اضافه می‌شود.</p>
-                        </div>
+                        <strong>(وزن × نرخ هر گرم + درصد)</strong>
                     </div>
 
                     <div class="pricing-guide-note">

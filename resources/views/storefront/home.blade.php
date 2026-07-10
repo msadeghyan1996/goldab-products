@@ -1,6 +1,9 @@
 @extends('layouts.storefront')
 
 @section('title', 'صفحه اصلی فروشگاه')
+@section('description', 'مشاهده جدیدترین محصولات ایران گلد، دسته‌بندی‌های طلا و جواهر و قیمت لحظه‌ای طلا در فروشگاه ایران گلد.')
+@section('image', asset('logo.jpg'))
+@section('keywords', 'ایران گلد, طلا, جواهر, قیمت لحظه‌ای طلا, فروشگاه طلا, محصولات طلا')
 
 @section('content')
 <section class="brand-hero-slider random-product-hero">
@@ -39,7 +42,6 @@
                                             <span class="hero-product-placeholder"><i class="bi bi-gem"></i></span>
                                         @endif
                                     </span>
-                                    <span class="hero-product-code">IRAN GOLD · {{ \App\Support\PersianNumber::convert($heroProduct->code) }}</span>
                                 </a>
                             </div>
                         </div>

@@ -1,7 +1,9 @@
 @extends('layouts.storefront')
 @section('title', $title)
+@section('description', $title.' ایران گلد؛ مشاهده محصولات طلا و جواهر با اطلاعات کامل، تصاویر محصول و قیمت به‌روز.')
+@section('image', asset('logo.jpg'))
+@section('keywords', 'محصولات طلا, جواهر, ایران گلد, خرید طلا, دسته‌بندی طلا')
 @section('content')
-<section class="catalog-hero"><div class="container"><h1>{{ $title }}</h1><p>برای مشاهده جزئیات، هر محصول را انتخاب کنید.</p></div></section>
 <div class="container py-5">
     @if($section === 'category')
     <div class="category-filters mb-4">
@@ -11,7 +13,7 @@
     @endif
     <div class="row g-3 g-lg-4" data-infinite-products>@include('storefront.partials.product-cards', ['products' => $products])</div>
     <div class="infinite-status" data-infinite-loader data-next-url="{{ $nextPageUrl }}">
-        @if($nextPageUrl)<span class="spinner-border spinner-border-sm"></span><span>در حال دریافت محصولات بیشتر...</span>@else<span>همه محصولات نمایش داده شدند.</span>@endif
+        @if($nextPageUrl)<span class="spinner-border spinner-border-sm"></span><span>در حال دریافت محصولات بیشتر...</span>@endif
     </div>
 </div>
 @endsection

@@ -4,11 +4,72 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'فروشگاه') | {{ config('app.name') }}</title>
-    <meta name="description" content="@yield('description', 'مشاهده جدیدترین محصولات فروشگاه')">
+    @php
+        $siteName = config('app.name', 'ایران گلد');
+        $pageTitle = trim($__env->yieldContent('title', 'فروشگاه'));
+        $fullTitle = $pageTitle ? $pageTitle.' | '.$siteName : $siteName;
+        $seoDescription = trim(strip_tags($__env->yieldContent('description', 'ایران گلد؛ مرجع مشاهده و انتخاب طلا و جواهر با طراحی ظریف، قیمت شفاف و محصولات به‌روز.')));
+        $seoKeywords = trim(strip_tags($__env->yieldContent('keywords', 'ایران گلد, طلا, جواهر, خرید طلا, قیمت طلا, فروشگاه طلا')));
+        $seoImage = trim($__env->yieldContent('image', asset('logo.jpg')));
+        $seoUrl = trim($__env->yieldContent('canonical', url()->current()));
+        $seoType = trim($__env->yieldContent('type', 'website'));
+    @endphp
+    <title>{{ $fullTitle }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="@yield('robots', 'index, follow, max-image-preview:large')">
+    <meta name="author" content="{{ $siteName }}">
+    <meta name="theme-color" content="#061426">
+    <link rel="canonical" href="{{ $seoUrl }}">
+    <link rel="icon" href="{{ asset('logo.jpg') }}" type="image/jpeg">
+    <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:type" content="{{ $seoType }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $fullTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoUrl }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta property="og:image:secure_url" content="{{ $seoImage }}">
+    <meta property="og:image:alt" content="{{ $siteName }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $fullTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{{ asset('css/storefront.css') }}" rel="stylesheet">
+    <script type="application/ld+json">
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => $siteName,
+            'url' => url('/'),
+            'logo' => asset('logo.jpg'),
+            'sameAs' => [
+                'https://instagram.com/irgold24.ir',
+                'https://t.me/irgold24',
+            ],
+            'contactPoint' => [
+                '@type' => 'ContactPoint',
+                'telephone' => '+984133129393',
+                'contactType' => 'customer service',
+                'areaServed' => 'IR',
+                'availableLanguage' => ['fa'],
+            ],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+    <script type="application/ld+json">
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => $siteName,
+            'url' => url('/'),
+            'inLanguage' => 'fa-IR',
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+    @stack('structured_data')
+    @stack('head')
 </head>
 <body data-live-prices-endpoint="{{ route('storefront.live-prices') }}">
 <header class="store-header sticky-top">
@@ -88,11 +149,6 @@
                     <a href="{{ route('storefront.catalog', ['all' => 1, 'category_id' => $footerCategory->id]) }}">{{ $footerCategory->name }}</a>
                 @endforeach
             </div>
-        </div>
-
-        <div class="footer-bottom">
-            <span class="copyright">© {{ \App\Support\PersianNumber::convert(date('Y')) }} ایران گلد</span>
-            <span>تمام حقوق محفوظ است.</span>
         </div>
     </div>
 </footer>
