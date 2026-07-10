@@ -1,0 +1,2 @@
+@extends('layouts.app') @section('title','محصول جدید') @section('page-heading','ایجاد محصول')
+@section('content')<div class="mb-4"><h1 class="h4 mb-1">ایجاد محصول</h1><p class="text-muted">کد محصول پس از ثبت به‌صورت خودکار ساخته می‌شود.</p></div><div class="card"><div class="card-body p-4"><form method="POST" enctype="multipart/form-data" action="{{ route('products.store') }}">@csrf @include('products._form')</form></div></div>@endsection

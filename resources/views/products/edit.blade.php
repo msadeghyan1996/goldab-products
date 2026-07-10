@@ -1,0 +1,2 @@
+@extends('layouts.app') @section('title','ویرایش محصول') @section('page-heading','ویرایش محصول')
+@section('content')<div class="mb-4"><h1 class="h4 mb-1">ویرایش {{ $product->title }}</h1><p class="text-muted mb-0">کد فعلی: <code>{{ $product->code }}</code></p></div><div class="card"><div class="card-body p-4"><form method="POST" enctype="multipart/form-data" action="{{ route('products.update',$product) }}">@csrf @method('PUT') @include('products._form')</form></div></div>@endsection

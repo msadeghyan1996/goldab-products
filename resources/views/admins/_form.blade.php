@@ -1,0 +1,9 @@
+@php($editing = isset($admin))
+<div class="row g-3">
+    <div class="col-md-6"><label class="form-label required" for="name">نام و نام خانوادگی</label><input id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name',$admin->name ?? '') }}"><x-field-error name="name" /></div>
+    <div class="col-md-6"><label class="form-label required" for="mobile">شماره موبایل</label><input dir="ltr" id="mobile" name="mobile" inputmode="numeric" class="form-control @error('mobile') is-invalid @enderror" value="{{ old('mobile',$admin->mobile ?? '') }}"><x-field-error name="mobile" /></div>
+    <div class="col-md-6"><label class="form-label {{ $editing ? '' : 'required' }}" for="password">رمز عبور</label><input dir="ltr" type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" autocomplete="new-password"><x-field-error name="password" />@if($editing)<div class="form-text">برای حفظ رمز فعلی خالی بگذارید.</div>@endif</div>
+    <div class="col-md-6"><label class="form-label {{ $editing ? '' : 'required' }}" for="password_confirmation">تکرار رمز عبور</label><input dir="ltr" type="password" id="password_confirmation" name="password_confirmation" class="form-control" autocomplete="new-password"></div>
+    <div class="col-12"><input type="hidden" name="is_active" value="0"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" @checked((bool)old('is_active',$admin->is_active ?? true))><label class="form-check-label" for="is_active">حساب فعال باشد</label></div><x-field-error name="is_active" /></div>
+</div>
+<div class="d-flex gap-2 mt-4"><button class="btn btn-primary" type="submit">ذخیره</button><a class="btn btn-light" href="{{ route('admins.index') }}">انصراف</a></div>

@@ -1,0 +1,8 @@
+body {
+    font-family: 'Yekan Bakh', 'IRANYekan', 'Vazirmatn', Tahoma, sans-serif !important;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b, th {
+    font-weight: 800;
+}
