@@ -140,7 +140,9 @@
     <div class="container">
         <div class="closing-luxury-frame">
             <div class="closing-luxury-copy">
+                <span class="closing-eyebrow"><i></i> امضای ایران گلد</span>
                 <h2>طلا فقط زینت نیست؛ روایت ارزش، اصالت و انتخابی ماندگار است.</h2>
+                <p>ایران گلد، همراه انتخاب‌های دقیق و ماندگار در طلا و جواهر.</p>
             </div>
             <div class="closing-luxury-visual">
                 <img src="{{ asset('lucimage.png') }}" alt="نمای لوکس طلا و جواهر ایران گلد">
