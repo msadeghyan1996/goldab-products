@@ -650,9 +650,11 @@ h1, h2, h3, h4, h5, h6, strong, b { font-weight: 800; }
     .closing-luxury-visual img { width: min(100%, 240px); max-height: 220px; opacity: .2; }
     .footer-grid { grid-template-columns: 1fr; gap: 1.7rem; }
     .brand-hero-slider .carousel-item, .hero-slide-row { min-height: 700px; }
-    .gold-dust-layer { opacity: .42; }
-    .dust-far { opacity: .28; }
-    .hero-gold-atmosphere::before { width: 390px; top: 23%; opacity: .22; }
+    .hero-gold-atmosphere::before { width: 360px; top: 23%; opacity: .18; filter: none; animation: none; transform: translateX(-50%); }
+    .hero-gold-atmosphere::after,
+    .gold-dust-layer,
+    .gold-light-wave { display: none; }
+    .hero-product-visual::before { opacity: .42; filter: none; animation: none; }
     .hero-slide-row { padding: 3rem 0 5.5rem; }
     .hero-product-slide { padding: 2.7rem 0 5.5rem; }
     .hero-product-copy h1 { font-size: 1.45rem; letter-spacing: -.3px; line-height: 1.45; }
