@@ -40,6 +40,10 @@
 @endpush
 
 @section('content')
+@php
+    $inPersonDiscountAmount = $productPrice !== null ? (int) round($productPrice * 0.01) : null;
+@endphp
+
 <div class="container product-detail py-4 py-lg-5">
     <nav class="small mb-4">
         <a href="{{ route('storefront.catalog') }}">خانه</a><span class="mx-2">/</span>
@@ -77,7 +81,28 @@
                             نحوه محاسبه قیمت
                         </button>
                     </div>
-                    <strong data-live-product-id="{{ $product->id }}">{{ $productPrice !== null ? \App\Support\PersianNumber::convert(number_format($productPrice)).' تومان' : 'نیازمند وزن و نرخ طلا' }}</strong>
+                    <div class="detail-price-values">
+                        <strong data-live-product-id="{{ $product->id }}">{{ $productPrice !== null ? \App\Support\PersianNumber::convert(number_format($productPrice)).' تومان' : 'نیازمند وزن و نرخ طلا' }}</strong>
+                        @if($inPersonDiscountAmount !== null)
+                            <div class="in-person-discount-price">
+                                <div>
+                                    <span><i class="bi bi-shop"></i> تخفیف خرید حضوری تا <b>۱</b> درصد</span>
+                                    <small>با مراجعه حضوری به فروشگاه، این مبلغ می‌تواند از قیمت لحظه‌ای کسر شود.</small>
+                                </div>
+                                <div class="presence-discount-values">
+                                    <strong data-live-presence-saving-id="{{ $product->id }}">{{ \App\Support\PersianNumber::convert(number_format($inPersonDiscountAmount)) }} تومان</strong>
+                                    <em>مبلغ تخفیف خرید حضوری</em>
+                                </div>
+                            </div>
+                        @else
+                            <div class="in-person-discount-price is-unavailable">
+                                <div>
+                                    <span><i class="bi bi-shop"></i> تخفیف خرید حضوری تا <b>۱</b> درصد</span>
+                                    <small>پس از محاسبه قیمت لحظه‌ای، تخفیف حضوری نمایش داده می‌شود.</small>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="spec-list">
